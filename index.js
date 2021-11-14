@@ -7,6 +7,7 @@ const cors = require('cors');
 const connectionDB = require('./database/db.config');
 //Rutas
 const authRoutes = require('./routes/auth.routes');
+const eventRoutes = require('./routes/event.routes');
 
 const app = express();
 connectionDB();
@@ -20,6 +21,7 @@ app.use(cors());
 //RUTAS
 // TODO: auth  : crear ,login, renew
 app.use('/api/auth', authRoutes)
+app.use('/api/events', eventRoutes)
 // TODO: crud eventos
 
 app.listen( process.env.PORT , () => {
