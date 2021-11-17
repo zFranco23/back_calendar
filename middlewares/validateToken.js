@@ -13,9 +13,10 @@ const validateToken = ( req , res=response , next) => {
                 mssg : 'Token left'
             })
         }
-        const { uid } = jwt.verify(token , process.env.JWT_SECRET_KEY);
+        const { uid , name } = jwt.verify(token , process.env.JWT_SECRET_KEY);
 
         req.user = uid;
+        req.user_name = name;
 
         next();
     }catch(err){

@@ -17,7 +17,7 @@ const newUser = async ( req , res = response) => {
 
         await user.save();
 
-        const token = await generateToken(user._id);
+        const token = await generateToken({ uid : user._id , name });
         res.status(201).json({
             ok : true , 
             mssg : 'New User',
@@ -57,7 +57,7 @@ const login = async ( req , res = response) => {
             })
         }
 
-        const token = await generateToken( user._id);
+        const token = await generateToken( { uid : user._id , name: user.name});
         
 
         res.json({
@@ -81,13 +81,15 @@ const renewToken = async ( req , res = response) => {
     try{
 
         const uid = req.user;
+        const name = req.user_name;
 
-        const token = await generateToken(uid);
+        const token = await generateToken({ uid , name});
 
         res.json({
             ok : true , 
             mssg : 'Renew token',
             uid,
+            name,
             token
         })
     }catch(err){
