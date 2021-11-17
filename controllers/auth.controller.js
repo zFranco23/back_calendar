@@ -16,11 +16,14 @@ const newUser = async ( req , res = response) => {
         const user = new User({ name, email , password : hashed});
 
         await user.save();
+
+        const token = await generateToken(user._id);
         res.status(201).json({
             ok : true , 
             mssg : 'New User',
             uid : user.id,
-            name : user.name
+            name : user.name,
+            token
         })
 
     }catch(err){
@@ -50,7 +53,7 @@ const login = async ( req , res = response) => {
         if(!validPassword){
             return res.status(400).json({
                 ok : false,
-                password : 'Password incorrect'
+                mssg : 'Password incorrect'
             })
         }
 
@@ -61,6 +64,7 @@ const login = async ( req , res = response) => {
             ok : true , 
             mssg : 'Login',
             uid : user.id,
+            name : user.name,
             token
         })
 
