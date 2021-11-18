@@ -36,7 +36,9 @@ router
     .put('/:id' , [
         check('id','That is not a valid MongoId').isMongoId()
     ] ,updateEvent)
-    .delete('/:id' , deleteEvent)
+    .delete('/:id', [
+        check('id','That is not a valid MongoId').isMongoId()  
+    ] , deleteEvent)
 
 
 module.exports = router;
